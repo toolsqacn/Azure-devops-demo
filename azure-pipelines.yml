@@ -22,6 +22,31 @@ stages:
             javaHomeOption: 'JDKVersion'
             jdkVersionOption: '1.11'
             jdkArchitectureOption: 'x64'
+ - stage: Code Scan
+   displayName: Code Scan
+   jobs:
+    - job: CodeScan
+      displayName: CodScan
+      steps:
+        - task: Maven@3
+          displayName: 'Code Scan'
+          inputs:
+            mavenPomFile: 'pom.xml'
+            publishJUnitResults: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            testRunTitle: 'CodeScan'
+            codeCoverageToolOption: 'Cobertura'
+            javaHomeOption: 'JDKVersion'
+            mavenVersionOption: 'Default'
+            mavenAuthenticateFeed: false
+            effectivePomSkip: false
+            sonarQubeRunAnalysis: true
+            isJacocoCoverageReportXML: true
+            sqMavenPluginVersionChoice: 'latest'
+            checkStyleRunAnalysis: true
+            pmdRunAnalysis: true
+            findBugsRunAnalysis: true
+            
  - stage: Test 
    displayName: Test Stage
    jobs:
