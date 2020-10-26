@@ -22,7 +22,7 @@ stages:
             javaHomeOption: 'JDKVersion'
             jdkVersionOption: '1.11'
             jdkArchitectureOption: 'x64'
- - stage: Code Scan
+ - stage: CodeScan
    displayName: Code Scan
    jobs:
     - job: CodeScan
