@@ -22,8 +22,8 @@ stages:
             javaHomeOption: 'JDKVersion'
             jdkVersionOption: '1.11'
             jdkArchitectureOption: 'x64'
- - stage: Test
-   displayName: Test
+ - stage: Test 
+   displayName: Test Stage
    jobs:
      - job: RunTest
        displayName: Run Test
