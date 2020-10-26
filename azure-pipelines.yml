@@ -44,8 +44,8 @@ stages:
             sonarQubeRunAnalysis: false
             checkStyleRunAnalysis: true
 
- - stage: CopyFile
-   displayName: CopyFile
+ - stage: SubmitArtifact
+   displayName: SubmitArtifact
    jobs:
      - job: CopyFileToDrop
        displayName: CopyFileToDrop
