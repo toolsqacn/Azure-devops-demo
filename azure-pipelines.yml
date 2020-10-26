@@ -32,11 +32,17 @@ stages:
            displayName: Maven Test
            inputs:
             mavenPomFile: 'pom.xml'
+            goals: 'test'
+            publishJUnitResults: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            testRunTitle: 'UnitTest'
+            codeCoverageToolOption: 'Cobertura'
             javaHomeOption: 'JDKVersion'
-            jdkVersionOption: '1.11'
-            jdkArchitectureOption: 'x64'
-            testRunTitle: UnitTest
-            testResultsFiles: "Test*.xml"
+            mavenVersionOption: 'Default'
+            mavenAuthenticateFeed: false
+            effectivePomSkip: false
+            sonarQubeRunAnalysis: false
+            checkStyleRunAnalysis: true
 
  - stage: CopyFile
    displayName: CopyFile
