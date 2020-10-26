@@ -22,7 +22,12 @@ stages:
             javaHomeOption: 'JDKVersion'
             jdkVersionOption: '1.11'
             jdkArchitectureOption: 'x64'
-
+ - stage: CopyFile
+   displayName: CopyFile
+   jobs:
+     - job: CopyFileToDrop
+       displayName: CopyFileToDrop
+       steps:
         - task: CopyFiles@2
           displayName: 'Copy Files to artifact staging directory'
           inputs:
