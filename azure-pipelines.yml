@@ -8,15 +8,27 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
+stages: 
+ - stage: Build
+   displayName: Build stage
+   jobs:
+     - job: MavenPackageAndPublishArtifacts
+       displayName: Maven Package and Publish Artifacts
+       steps:
+        - task: Maven@3
+          displayName: 'Maven Package'
+          inputs:
+            mavenPomFile: 'pom.xml'
+            javaHomeOption: 'JDKVersion'
+            jdkVersionOption: '1.11'
+            jdkArchitectureOption: 'x64'
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+        - task: CopyFiles@2
+          displayName: 'Copy Files to artifact staging directory'
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)'
+            Contents: '**/target/*.?(war|jar)'
+            TargetFolder: $(Build.ArtifactStagingDirectory)
+
+        - upload: $(Build.ArtifactStagingDirectory)
+          artifact: drop
