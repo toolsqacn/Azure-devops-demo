@@ -9,22 +9,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 stages: 
- - stage: Build
-   displayName: Build stage
-   jobs:
-     - job: MavenPackageAndPublishArtifacts
-       displayName: Maven Package and Publish Artifacts
-       steps:
-        - task: Maven@3
-          displayName: 'Maven Package'
-          inputs:
-            mavenPomFile: 'pom.xml'
-            javaHomeOption: 'JDKVersion'
-            jdkVersionOption: '1.11'
-            jdkArchitectureOption: 'x64'
- - stage: CodeScan
-   displayName: Code Scan
-   jobs:
+  - stage: CodeScan
+    displayName: Code Scan
+    jobs:
     - job: CodeScan
       displayName: CodScan
       steps:
@@ -47,9 +34,9 @@ stages:
             pmdRunAnalysis: true
             findBugsRunAnalysis: true
             
- - stage: Test 
-   displayName: Test Stage
-   jobs:
+  - stage: Test
+    displayName: Test Stage
+    jobs:
      - job: RunTest
        displayName: Run Test
        steps:
@@ -69,9 +56,24 @@ stages:
             sonarQubeRunAnalysis: false
             checkStyleRunAnalysis: true
 
- - stage: SubmitArtifact
-   displayName: SubmitArtifact
-   jobs:
+  - stage: Package
+    displayName: Package stage
+    jobs:
+     - job: MavenPackageAndPublishArtifacts
+       displayName: Maven Package and Publish Artifacts
+       steps:
+        - task: Maven@3
+          displayName: 'Maven Package'
+          inputs:
+            mavenPomFile: 'pom.xml'
+            javaHomeOption: 'JDKVersion'
+            jdkVersionOption: '1.11'
+            jdkArchitectureOption: 'x64'
+            goals: package
+
+  - stage: SubmitArtifact
+    displayName: SubmitArtifact
+    jobs:
      - job: CopyFileToDrop
        displayName: CopyFileToDrop
        steps:
