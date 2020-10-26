@@ -22,6 +22,22 @@ stages:
             javaHomeOption: 'JDKVersion'
             jdkVersionOption: '1.11'
             jdkArchitectureOption: 'x64'
+ - stage: Test
+   displayName: Test
+   jobs:
+     - job: RunTest
+       displayName: Run Test
+       steps:
+         - task: Maven@3
+           displayName: Maven Test
+           inputs:
+            mavenPomFile: 'pom.xml'
+            javaHomeOption: 'JDKVersion'
+            jdkVersionOption: '1.11'
+            jdkArchitectureOption: 'x64'
+            testRunTitle: UnitTest
+            testResultsFiles: "Test*.xml"
+
  - stage: CopyFile
    displayName: CopyFile
    jobs:
